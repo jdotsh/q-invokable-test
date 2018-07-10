@@ -53,13 +53,20 @@ Window {
         // correctly returns:
         // "qml: [6° 0' 0.0" N, 6° 0' 0.0" W,7° 0' 0.0" N, 6° 0' 0.0" W,7° 0' 0.0" N, 7° 0' 0.0" W,6° 0' 0.0" N, 7° 0' 0.0" W,6° 0' 0.0" N, 6° 0' 0.0" W]"
 
-        console.log("Point in hole, should return false: " + poly.contains(QtPositioning.coordinate(0,0)))
+        console.log("Point in hole0, should return false: " + poly.contains(QtPositioning.coordinate(0,0)))
+        console.log("Point on hole0 boundary, should return true: " + poly.contains(QtPositioning.coordinate(5,0)))
+        console.log("Point in hole1, should return false: " + poly.contains(QtPositioning.coordinate(6.5,-6.5)))
+        console.log("Point on hole1 boundary, should return true: " + poly.contains(QtPositioning.coordinate(6.5,-6)))
+        console.log("Point in hole2, should return false: " + poly.contains(QtPositioning.coordinate(6.5,6.5)))
+        console.log("Point on hole2 boundary, should return true: " + poly.contains(QtPositioning.coordinate(6.5,6)))
         // uncorrectly returns true.
         // it seems that contains method doesn't recognize holes loaded from QML
         // on the same polygon, the contains method works as expected in C++
         // now re-thinking the whole implementation
 
         console.log("Point outside polygon, should return false: " + poly.contains(QtPositioning.coordinate(20,20)))
+        console.log("Point on polygon boundary, should return true: " + poly.contains(QtPositioning.coordinate(10,0)))
         console.log("Point in polygon, not in hole, should return true: " + poly.contains(QtPositioning.coordinate(8,8)))
     }
 }
+
