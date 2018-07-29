@@ -1,12 +1,19 @@
 import QtQuick 2.11
 import QtQuick.Window 2.11
 import QtPositioning 5.11
+import QtLocation 5.11
 
 Window {
     visible: true
     width: 20
     height: 20
     title: qsTr("Hello World")
+
+    Map {
+        MapPolygon {
+            id: poly
+        }
+    }
 
     Component.onCompleted: {
 
@@ -42,14 +49,14 @@ Window {
         poly.addHole(hole2)
         // using the setter to store holes data
 
-        console.log(poly.holesCount())
+        console.log("1st test: " + poly.holesCount())
         // correctly returns:
         // "qml: 3"
 
         var firstHole = poly.hole(0)
         //using the getter to extract an hole
 
-        console.log(firstHole)
+        console.log("using the getter to extract the first hole: " + firstHole)
         // correctly returns:
         // "qml: [6° 0' 0.0" N, 6° 0' 0.0" W,7° 0' 0.0" N, 6° 0' 0.0" W,7° 0' 0.0" N, 7° 0' 0.0" W,6° 0' 0.0" N, 7° 0' 0.0" W,6° 0' 0.0" N, 6° 0' 0.0" W]"
 
@@ -59,6 +66,7 @@ Window {
         console.log("Point on hole1 boundary, should return true: " + poly.contains(QtPositioning.coordinate(6.5,-6)))
         console.log("Point in hole2, should return false: " + poly.contains(QtPositioning.coordinate(6.5,6.5)))
         console.log("Point on hole2 boundary, should return true: " + poly.contains(QtPositioning.coordinate(6.5,6)))
+        console.log("hole count test: "+poly.holesCount())
         // uncorrectly returns true.
         // it seems that contains method doesn't recognize holes loaded from QML
         // on the same polygon, the contains method works as expected in C++
@@ -68,5 +76,7 @@ Window {
         console.log("Point on polygon boundary, should return true: " + poly.contains(QtPositioning.coordinate(10,0)))
         console.log("Point in polygon, not in hole, should return true: " + poly.contains(QtPositioning.coordinate(8,8)))
     }
+
+
 }
 
